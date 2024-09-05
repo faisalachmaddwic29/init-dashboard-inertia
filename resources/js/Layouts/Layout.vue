@@ -142,9 +142,9 @@ const store = useColumnStore();
                     />
                 </svg>
                 <svg
-                    class="w-[22px] h-[22px] text-orange-600 mt-[1px]"
-                    width="27"
+                    class="w-[22px] h-[22px] text-orange-600 mt-[1px] cursor-pointer"
                     @click="store.changeColumn(4)"
+                    width="27"
                     height="28"
                     viewBox="0 0 27 28"
                     fill="none"

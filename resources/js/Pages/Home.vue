@@ -36,7 +36,7 @@ const { items } = defineProps<{
     <div class="w-full px-4">
         <div class="flex flex-wrap items-stretch -mx-4">
             <div
-                class="w-full p-4 !sm:w-1/2 md:w-1/2 lg:w-1/4"
+                class="w-full p-4 !sm:w-1/2 md:w-1/2 lg:w-1/3"
                 :class="{
                     'lg:w-full': store.column === 1,
                     'lg:w-1/2': store.column === 2,
