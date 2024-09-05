@@ -6,6 +6,11 @@ import { createInertiaApp, Head, Link } from "@inertiajs/vue3";
 import Layout from "./Layouts/Layout.vue";
 import { ZiggyVue } from "../../vendor/tightenco/ziggy";
 
+
+
+import { createPinia } from "pinia";
+const pinia = createPinia();
+
 createInertiaApp({
     title: (title) => `Dashboard Erat | ${title}`,
     resolve: (name) => {
@@ -17,6 +22,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(pinia)
             .use(ZiggyVue)
             .component("Head", Head)
             .component("Link", Link)

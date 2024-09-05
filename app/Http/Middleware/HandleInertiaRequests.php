@@ -36,9 +36,9 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            [
-                'name' => 'Faisal Achmad Dwi C'
-            ]
+            // [
+            //     'name' => 'Faisal Achmad Dwi C'
+            // ]
         ]);
     }
 }

@@ -1,31 +1,179 @@
-<script setup>
-// import demo from "../Layouts/demo.vue";
+<script setup lang="ts">
+import { useColumnStore } from "../Stores/columnStore";
+import { currency } from "../Utils/currency";
 
-// defineOptions({ layout: demo });
+const store = useColumnStore();
+
+interface ItemType {
+    name: string; // Gunakan 'string' (huruf kecil)
+    type: string | null;
+    value: any;
+}
+
+interface ItemsType {
+    name: string; // Gunakan 'string' (huruf kecil)
+    items: ItemType[];
+}
+
+interface DataType {
+    name: string; // Gunakan 'string' (huruf kecil)
+    description: string | null;
+    data: Array<ItemsType>;
+}
+
+// Definisikan props langsung dengan tipe tanpa 'type' dan 'required'
+const { items } = defineProps<{
+    items: DataType[];
+}>();
 </script>
 
 <template>
-    <Head :title="$page.component">
-        <meta
-            head-key="description"
-            name="description"
-            content="ini halama home page"
-        />
+    <!-- <Head :title="$page.component"> -->
+    <Head title="Kopnuspos">
+        <meta head-key="description" name="description" content="Home Page" />
     </Head>
 
-    <div class="mx-auto px-4">
-        <p>{{ $page.component }}</p>
-        <p class="text-2xl">{{ $page.props[0].name }}</p>
+    <div class="w-full px-4">
+        <div class="flex flex-wrap items-stretch -mx-4">
+            <div
+                class="w-full p-4 !sm:w-1/2 md:w-1/2 lg:w-1/4"
+                :class="{
+                    'lg:w-full': store.column === 1,
+                    'lg:w-1/2': store.column === 2,
+                    'lg:w-1/3': store.column === 3,
+                    'lg:w-1/4': store.column === 4,
+                }"
+                v-for="item in items"
+                :key="item.name"
+            >
+                <div
+                    class="flex flex-col items-stretch h-full bg-white border divide-y rounded-md shadow-md shadow-slate-200 border-slate-100"
+                >
+                    <h1 class="p-4 title">{{ item.name }}</h1>
+                    <p v-if="item.description" class="p-4 italic font-light">
+                        {{ item.description }}
+                    </p>
 
-        <div>ini menggunakan inertia</div>
+                    <div
+                        class="p-4 content-page"
+                        v-for="subItems in item.data"
+                        :key="subItems.name"
+                    >
+                        <h5
+                            class="mb-3 italic font-medium text-orange-500 text-capitalize"
+                        >
+                            {{ subItems.name }}
+                        </h5>
 
-        <p class="text-4xl">FAISAL</p>
+                        <div
+                            class="my-4 sub-content-page"
+                            v-for="subItem in subItems.items"
+                            :key="subItem.name"
+                        >
+                            <div
+                                class="flex items-center justify-between gap-4"
+                                v-if="subItem.type != 'progress'"
+                            >
+                                <p class="font-light">{{ subItem.name }}</p>
+                                <p class="font-semibold">
+                                    {{ currency(subItem.value) }}
+                                </p>
+                            </div>
 
-        <Link class="mt-[1000px] block" :href="route('home')" preserve-scroll
-            >Refresh</Link
-        >
-        <Link class="mt-[1000px] block" :href="route('home')"
-            >Scroll to Top</Link
-        >
+                            <div v-else class="flex items-center gap-4">
+                                <p class="w-3/12 font-light">
+                                    {{ subItem.name }}
+                                </p>
+
+                                <div class="flex items-center w-9/12 gap-4">
+                                    <div
+                                        class="w-full h-6 bg-gray-200 rounded-md"
+                                    >
+                                        <div
+                                            class="h-6 bg-orange-600 rounded-md"
+                                            :style="{
+                                                width: subItem.value + '%',
+                                            }"
+                                        ></div>
+                                    </div>
+                                    <p
+                                        class="font-semibold text-normal"
+                                        :class="{
+                                            'text-red-600':
+                                                parseInt(subItem.value) < 50,
+                                            'text-green-600':
+                                                parseInt(subItem.value) >= 50,
+                                        }"
+                                    >
+                                        {{ subItem.value + "%" }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div
+                class="w-full p-4 sm:w-1/2 md:w-1/2 xl:w-1/4"
+                v-for="item in items"
+                :key="item.name"
+            >
+                <div
+                    class="flex flex-col items-stretch border divide-y rounded-md shadow-md shadow-slate-200 border-slate-100"
+                >
+                    <h1 class="p-4 title">{{ item.name }}</h1>
+                    <p v-if="item.description" class="p-4 font-light">
+                        {{ item.description }}
+                    </p>
+
+                    <div class="p-4 content-page" v-for="subItems in item.data">
+                        <h5
+                            class="mb-3 italic font-medium text-orange-500 text-capitalize"
+                        >
+                            {{ subItems.name }}
+                        </h5>
+
+                        <div
+                            class="mb-3 sub-content-page"
+                            v-for="subItem in subItems.items"
+                        >
+                            <div
+                                class="flex items-center justify-between gap-4"
+                                v-if="subItem.type != 'progress'"
+                            >
+                                <p>{{ subItem.name }}</p>
+                                <p>{{ subItem.value }}</p>
+                            </div>
+
+                            <div v-else class="flex items-center gap-4">
+                                <p class="w-3/12">{{ subItem.name }}</p>
+
+                                <div class="flex items-center w-9/12 gap-4">
+                                    <div
+                                        class="w-full h-6 bg-gray-200 rounded-md"
+                                    >
+                                        <div
+                                            class="h-6 bg-orange-600 rounded-md"
+                                            :style="{
+                                                width: subItem.value + '%',
+                                            }"
+                                        ></div>
+                                    </div>
+                                    <p
+                                        class="text-sm"
+                                        :class="{
+                                            'text-red-600':
+                                                parseInt(subItem.value) < 50,
+                                        }"
+                                    >
+                                        {{ subItem.value + "%" }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
     </div>
 </template>
