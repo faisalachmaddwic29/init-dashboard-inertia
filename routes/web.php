@@ -14,11 +14,5 @@ use Inertia\Inertia;
 
 Route::group(['namespace' => 'Home'], function () {
     Route::get('/', [IndexController::class, 'index'])->name('home');
-});
-
-
-Route::get('/about', function () {
-    // return Inertia::render('About');
-    // return inertia('About');
-    return inertia('About', ['user' => "Faisal"]);
+    Route::get('/download-format', [IndexController::class, 'formatUpload'])->name('download-format');
 });

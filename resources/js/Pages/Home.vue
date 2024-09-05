@@ -33,18 +33,19 @@ const { items } = defineProps<{
         <meta head-key="description" name="description" content="Home Page" />
     </Head>
 
-    <div class="w-full px-4">
+    <div class="w-full px-4 text-slate-700">
+        <!-- <p>{{ store.column }}</p> -->
         <div class="flex flex-wrap items-stretch -mx-4">
             <div
-                class="w-full p-4 !sm:w-1/2 md:w-1/2 lg:w-1/3"
-                :class="{
-                    'lg:w-full': store.column === 1,
-                    'lg:w-1/2': store.column === 2,
-                    'lg:w-1/3': store.column === 3,
-                    'lg:w-1/4': store.column === 4,
-                }"
                 v-for="item in items"
                 :key="item.name"
+                class="w-full p-4 md:w-1/2 sm:w-1/2"
+                :class="{
+                    'lg:w-full': store.column == 1,
+                    'lg:w-1/2': store.column == 2,
+                    'lg:w-1/3': store.column == 3,
+                    'lg:w-1/4': store.column == 4,
+                }"
             >
                 <div
                     class="flex flex-col items-stretch h-full bg-white border divide-y rounded-md shadow-md shadow-slate-200 border-slate-100"
