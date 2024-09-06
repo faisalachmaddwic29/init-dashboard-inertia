@@ -50,7 +50,7 @@ const { items } = defineProps<{
                 <div
                     class="flex flex-col items-stretch h-full bg-white border divide-y rounded-md shadow-md shadow-slate-200 border-slate-100"
                 >
-                    <h1 class="p-4 title">{{ item.name }}</h1>
+                    <h1 class="p-4 title" v-if="item.name">{{ item.name }}</h1>
                     <p v-if="item.description" class="p-4 italic font-light">
                         {{ item.description }}
                     </p>
@@ -59,6 +59,7 @@ const { items } = defineProps<{
                         class="p-4 content-page"
                         v-for="subItems in item.data"
                         :key="subItems.name"
+                        v-if="item.data"
                     >
                         <h5
                             class="mb-3 italic font-medium text-orange-500 text-capitalize"
@@ -114,67 +115,6 @@ const { items } = defineProps<{
                     </div>
                 </div>
             </div>
-            <!-- <div
-                class="w-full p-4 sm:w-1/2 md:w-1/2 xl:w-1/4"
-                v-for="item in items"
-                :key="item.name"
-            >
-                <div
-                    class="flex flex-col items-stretch border divide-y rounded-md shadow-md shadow-slate-200 border-slate-100"
-                >
-                    <h1 class="p-4 title">{{ item.name }}</h1>
-                    <p v-if="item.description" class="p-4 font-light">
-                        {{ item.description }}
-                    </p>
-
-                    <div class="p-4 content-page" v-for="subItems in item.data">
-                        <h5
-                            class="mb-3 italic font-medium text-orange-500 text-capitalize"
-                        >
-                            {{ subItems.name }}
-                        </h5>
-
-                        <div
-                            class="mb-3 sub-content-page"
-                            v-for="subItem in subItems.items"
-                        >
-                            <div
-                                class="flex items-center justify-between gap-4"
-                                v-if="subItem.type != 'progress'"
-                            >
-                                <p>{{ subItem.name }}</p>
-                                <p>{{ subItem.value }}</p>
-                            </div>
-
-                            <div v-else class="flex items-center gap-4">
-                                <p class="w-3/12">{{ subItem.name }}</p>
-
-                                <div class="flex items-center w-9/12 gap-4">
-                                    <div
-                                        class="w-full h-6 bg-gray-200 rounded-md"
-                                    >
-                                        <div
-                                            class="h-6 bg-orange-600 rounded-md"
-                                            :style="{
-                                                width: subItem.value + '%',
-                                            }"
-                                        ></div>
-                                    </div>
-                                    <p
-                                        class="text-sm"
-                                        :class="{
-                                            'text-red-600':
-                                                parseInt(subItem.value) < 50,
-                                        }"
-                                    >
-                                        {{ subItem.value + "%" }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 </template>

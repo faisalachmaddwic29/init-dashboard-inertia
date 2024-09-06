@@ -1,35 +1,8 @@
 <script setup>
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import { useColumnStore } from "../Stores/columnStore";
 
 const store = useColumnStore();
-
-// const downloadFileFetch = async () => {
-//     try {
-//         let blob = null;
-//         let response = await fetch(route("download-format"), {
-//             method: "GET",
-//         });
-
-//         console.log(response);
-
-//         if (response.ok) {
-//             blob = await response.blob();
-//         } else {
-//             throw response;
-//         }
-//         console.log(response.blob());
-//         const url = window.URL.createObjectURL(blob);
-//         const link = document.createElement("a");
-//         link.href = url;
-//         link.setAttribute("download", "berkas.pdf");
-//         document.body.appendChild(link);
-//         link.click();
-//     } catch (error) {
-//         let e = await error.json();
-//         alert(e.message ?? "Gagal download file");
-//     }
-// };
 
 async function downloadFile() {
     try {
@@ -144,12 +117,12 @@ async function downloadFile() {
         <header
             class="hidden w-full px-8 py-4 lg:flex lg:justify-between lg:items-center"
         >
-            <!-- <img
-                src="/public/images/logo.png"
-                alt="Koperasi Nusantara"
-                class="w-40"
-            /> -->
-            <button
+            <Link :href="route('home')">
+                <h4 class="text-2xl font-bold text-orange-500">
+                    Dashboard Management Risiko
+                </h4>
+            </Link>
+            <!-- <button
                 @click.prevent="downloadFile"
                 class="inline-flex items-center px-4 py-2 font-bold text-gray-800 bg-gray-300 rounded hover:bg-gray-400"
             >
@@ -161,7 +134,7 @@ async function downloadFile() {
                     <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
                 </svg>
                 <span>Download Format</span>
-            </button>
+            </button> -->
 
             <div class="flex gap-4">
                 <svg

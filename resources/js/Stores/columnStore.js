@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 export const useColumnStore = defineStore("column", () => {
-    const column = ref(3);
+    const column = ref(4);
 
     const changeColumn = (index) => {
         column.value = index;
